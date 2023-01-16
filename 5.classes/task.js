@@ -76,12 +76,69 @@ class Library {
     }
 
     findBookBy(type, value) {
-        let index = this.books.findIndex(e => e.type === value);
+        const books = this.books;
+        let index;
+        if (type === "name") {
+           index = books.find(e => e.name === value);        
+        } else if (type === "releaseDate") {
+           index = books.find(e => e.releaseDate === value);
+        } else if (type === "author") {
+           index = books.find(e => e.author === value);
+        } else if (type === "pagesCount") {
+            index = books.find(e => e.pagesCount === value);
+        } else if (type === "type") {
+            index = books.find(e => e.type === value);
+        }
+
+        if (index === undefined) {
+            index = null;
+        } 
+
+        return index;
+    }
+
+    giveBookByName(bookName) {
+        let books = this.books;
+        let deleteBook;
+        let index = books.findIndex(e => e.name === bookName);
+
         if (index !== -1) {
-            this.books.name[index];
-        } else { 
-            null;
+            deleteBook = books[index];
+        } else {
+            deleteBook = null;
+        }
+        
+        books.splice(index, 1);
+        return deleteBook;
+    }
+}
+
+class Student {
+    constructor (name) {
+        this.name = name;
+        this.journal = {}
+    }
+
+    addMark(mark, subject) {
+        if (!(subject in this.journal)) {
+            this.journal[subject] = [];
+        }
+
+        if (mark >= 2 && mark <= 5) {
+            this.journal[subject].push(mark);
         }
     }
 
+    getAverageBySubject(subject) {
+        let averageBySubject;
+        if (!(subject in this.journal)) {
+            averageBySubject = 0;
+        } else {
+            averageBySubject = (this.journal[subject].reduce((a, b) => a + b, 0)) / this.journal[subject].length;
+        }
+
+        return averageBySubject;
+    }
+
+    getAverage
 }
