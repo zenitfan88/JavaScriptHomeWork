@@ -1,23 +1,23 @@
 class AlarmClock {
-    constructor () {
+    constructor() {
         this.alarmCollection = [];
         this.intervalId = null;
     }
 
     addClock(time, callback) {
         if (time === null || callback === undefined) {
-            throw new Error('Отсутствуют обязательные аргументы')
-        }
+            throw new Error('Отсутствуют обязательные аргументы');
+        };
 
         if (this.alarmCollection.includes(time)) {
             console.warn('Уже присутствует звонок на это же время');
-        }
+        };
 
         this.alarmCollection.push({
             callback: callback,
             time: time,
             canCall: true,
-        })
+        });
     }
 
     removeClock(value) {
@@ -25,8 +25,8 @@ class AlarmClock {
         let index = this.alarmCollection.findIndex(e => e.time === value);
         if (index !== -1) {
             this.alarmCollection.splice(index, 1);
-        }
-        })
+        };
+        });
 
     }
 
@@ -37,32 +37,20 @@ class AlarmClock {
     }
 
     start() {
-        if (this.intervalId === null) {
+        if (this.intervalId !== null) {
             return;
         } else {
-        return this.alarmCollection = this.alarmCollection.forEach(item => {
-                if (this.alarmCollection[item].time === this.getCurrentFormattedTime()) {
-                    this.alarmCollection[item].canCall = false;
-                    this.alarmCollection.callback();
-                
+            this.intervalId = setInterval(() => {
+                this.alarmCollection.forEach((item,index) => {
+                    if (this.alarmCollection[index].time === this.getCurrentFormattedTime()) {
+                        this.alarmCollection[index].canCall = false;
+                        this.alarmCollection[index].callback();
+                    }
+                })
+            }, 1000);
         }
-        
+        return this.intervalId;
     }
-
-    )}
-
-    /*this.intervalId = function() {
-        setInterval(() => {
-        this.alarmCollection.forEach(item => {
-            if (this.alarmCollection.time === currentTime) {
-                this.alarmCollection.canCall = false;
-                this.alarmCollection.callback();
-            }
-        })
-    }, 1000);*/
-}
-}
-
 
 
     stop() {
