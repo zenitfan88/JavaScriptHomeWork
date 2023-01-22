@@ -78,17 +78,7 @@ class Library {
     findBookBy(type, value) {
         const books = this.books;
         let index;
-        if (type === "name") {
-           index = books.find(e => e.name === value);        
-        } else if (type === "releaseDate") {
-           index = books.find(e => e.releaseDate === value);
-        } else if (type === "author") {
-           index = books.find(e => e.author === value);
-        } else if (type === "pagesCount") {
-            index = books.find(e => e.pagesCount === value);
-        } else if (type === "type") {
-            index = books.find(e => e.type === value);
-        }
+        index = books.find(e => e[type] === value);
 
         if (index === undefined) {
             index = null;
